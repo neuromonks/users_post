@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:users_post/widgets/WidgetAlertDialog.dart';
@@ -22,15 +21,6 @@ class HelperFunction {
   }
 
   static showFlushbarSuccess(BuildContext context, String msg) {
-    // Flushbar(
-    //   margin: EdgeInsets.all(8),
-    //   borderRadius: 8,
-    //   backgroundColor: Colors.green,
-    //   flushbarPosition: FlushbarPosition.TOP,
-    //   message: msg,
-    //   duration: Duration(seconds: 3),
-    // )..show(context);
-
     showDialog(
       context: context,
       builder: (context) {
@@ -84,15 +74,6 @@ class HelperFunction {
   }
 
   static showFlushbarError(BuildContext context, String msg) {
-    // Flushbar(
-    //   margin: EdgeInsets.all(8),
-    //   borderRadius: 8,
-    //   backgroundColor: Colors.red,
-    //   flushbarPosition: FlushbarPosition.TOP,
-    //   message: msg,
-    //   duration: Duration(seconds: 3),
-    // )..show(context);
-
     showDialog(
       context: context,
       builder: (context) {

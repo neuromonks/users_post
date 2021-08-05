@@ -4,6 +4,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:users_post/helper/HelperFunction.dart';
 import 'package:users_post/modules/users/ScreenDisplayComments.dart';
 import 'package:users_post/services/ServiceApi.dart';
+import 'package:users_post/theme/ThemeColor.dart';
 import 'package:users_post/theme/ThemeProgressIndicator.dart';
 import 'package:users_post/widgets/WidgetAppBar.dart';
 import 'package:users_post/widgets/WidgetError.dart';
@@ -36,7 +37,7 @@ class _ScreenDisplayPostsState extends State<ScreenDisplayPosts> {
         body: SafeArea(
           child: RefreshIndicator(
             child: PagedListView(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               builderDelegate: PagedChildBuilderDelegate(
                   firstPageProgressIndicatorBuilder: (context) => Container(
                       child: Center(child: ThemeProgressIndicator.spinKit)),
@@ -69,7 +70,9 @@ class _ScreenDisplayPostsState extends State<ScreenDisplayPosts> {
         Navigator.push(
             context,
             PageTransition(
-                child: ScreenDisplayComments(),
+                child: ScreenDisplayComments(
+                  postId: userDetails['id'],
+                ),
                 type: HelperFunction.pageTransitionType()));
       },
       child: Card(
@@ -80,40 +83,15 @@ class _ScreenDisplayPostsState extends State<ScreenDisplayPosts> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              RichText(
-                  text: WidgetSpan(
-                      child: Row(
-                children: [
-                  Text('Title : ',
-                      style: TextStyle(
-                        color: Colors.grey,
-                      )),
-                  Expanded(
-                    child: Text('${userDetails['title']}',
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: Colors.black)),
-                  ),
-                ],
-              ))),
+              Text('${userDetails['title']}',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      color: ThemeColor.darkPink, fontWeight: FontWeight.w700)),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 7),
-                child: RichText(
-                    text: WidgetSpan(
-                        child: Row(
-                  children: [
-                    Text('Description : ',
-                        style: TextStyle(
-                          color: Colors.grey,
-                        )),
-                    Expanded(
-                      child: Text('${userDetails['body']}',
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(color: Colors.black)),
-                    ),
-                  ],
-                ))),
+                child: Text('${userDetails['body']}',
+                    style: TextStyle(color: ThemeColor.darkBlue)),
               ),
             ],
           ),
@@ -132,7 +110,6 @@ class _ScreenDisplayPostsState extends State<ScreenDisplayPosts> {
         List newItems = [];
         if (response != null) {
           newItems = response['data'];
-
           final isLastPage = newItems.length < 20;
           if (isLastPage) {
             _pagingController.appendLastPage(newItems);
@@ -140,6 +117,8 @@ class _ScreenDisplayPostsState extends State<ScreenDisplayPosts> {
             final nextPageKey = pageKey + 1;
             _pagingController.appendPage(newItems, nextPageKey);
           }
+        } else {
+          _pagingController.error = "error";
         }
       });
     } catch (error) {
