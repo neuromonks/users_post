@@ -101,7 +101,10 @@ class _ScreenDisplayUsersState extends State<ScreenDisplayUsers> {
               Text('${userDetails['name']}',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: ThemeColor.darkPink)),
+                  style: TextStyle(
+                      color: ThemeColor.darkPink,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w800)),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 7),
                 child: Text('${userDetails['email']}',

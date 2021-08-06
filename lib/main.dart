@@ -53,9 +53,10 @@ class _MyAppState extends State<MyApp> {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: AnimatedSplashScreen(
+          animationDuration: Duration(seconds: 2),
           splash: 'assets/images/flutter.png',
           nextScreen: ScreenHome(),
-          splashTransition: SplashTransition.slideTransition,
+          splashTransition: SplashTransition.scaleTransition,
           pageTransitionType: PageTransitionType.rightToLeft,
         ),
       ),
@@ -64,7 +65,7 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initConnectivity() async {
-    ConnectivityResult result = ConnectivityResult.none;
+    ConnectivityResult result = ConnectivityResult.wifi;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       result = await _connectivity.checkConnectivity();
@@ -83,9 +84,12 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    print(result);
     switch (result) {
       case ConnectivityResult.wifi:
+        break;
       case ConnectivityResult.mobile:
+        break;
       case ConnectivityResult.none:
         HelperFunction.showFlushbarError(
             navigatorKey.currentContext, "No internet found");
