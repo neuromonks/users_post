@@ -33,53 +33,36 @@ class _ScreenDisplayPostsState extends State<ScreenDisplayPosts> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: WidgetHomeBaseDesign(
-            widgetBody: SafeArea(
-              child: RefreshIndicator(
-                child: PagedListView(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  builderDelegate: PagedChildBuilderDelegate(
-                      firstPageProgressIndicatorBuilder: (context) => Container(
-                          child: Center(child: ThemeProgressIndicator.spinKit)),
-                      newPageProgressIndicatorBuilder: (context) => Container(
-                            child: Center(
-                              child: ThemeProgressIndicator.spinKit,
-                            ),
-                          ),
-                      firstPageErrorIndicatorBuilder: (context) => Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical:
-                                  MediaQuery.of(context).size.height / 2.7),
-                          child: WidgetError()),
-                      newPageErrorIndicatorBuilder: (context) =>
-                          Container(child: Center(child: WidgetError())),
-                      noItemsFoundIndicatorBuilder: (context) =>
-                          WidgetNoDataFound(),
-                      itemBuilder: (context, item, index) {
-                        return widgetUsers(item);
-                      }),
-                  pagingController: _pagingController,
-                ),
-                onRefresh: refreshPage,
-              ),
-            ),
-            widgetTop: Container(
-              padding: EdgeInsets.only(left: 15, top: 20),
-              child: Row(
-                children: [
-                  IconButton(
-                      icon: Icon(Icons.arrow_back_ios),
-                      iconSize: 20,
-                      color: Colors.white,
-                      onPressed: () => Navigator.of(context).pop()),
-                  Text(
-                    'Posts',
-                    style: TextStyle(fontSize: 20, color: Colors.white),
-                  )
-                ],
-              ),
-            )));
+      backgroundColor: Colors.white,
+      appBar: WidgetAppBar(title: 'Posts'),
+      body: SafeArea(
+        child: RefreshIndicator(
+          child: PagedListView(
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            builderDelegate: PagedChildBuilderDelegate(
+                firstPageProgressIndicatorBuilder: (context) => Container(
+                    child: Center(child: ThemeProgressIndicator.spinKit)),
+                newPageProgressIndicatorBuilder: (context) => Container(
+                      child: Center(
+                        child: ThemeProgressIndicator.spinKit,
+                      ),
+                    ),
+                firstPageErrorIndicatorBuilder: (context) => Container(
+                    padding: EdgeInsets.symmetric(
+                        vertical: MediaQuery.of(context).size.height / 2.7),
+                    child: WidgetError()),
+                newPageErrorIndicatorBuilder: (context) =>
+                    Container(child: Center(child: WidgetError())),
+                noItemsFoundIndicatorBuilder: (context) => WidgetNoDataFound(),
+                itemBuilder: (context, item, index) {
+                  return widgetUsers(item);
+                }),
+            pagingController: _pagingController,
+          ),
+          onRefresh: refreshPage,
+        ),
+      ),
+    );
   }
 
   Widget widgetUsers(var userDetails) {
